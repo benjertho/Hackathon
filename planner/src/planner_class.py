@@ -109,8 +109,8 @@ class PlannerClass:
         print "Entering TRAY_ROT_STATE"
         return "TRAY_ROT_STATE"
       else:
-        print "Target cannot be verified"
-        return "SEARCH_STATE"
+        print "Target cannot be verified - Aborting"
+        return "IDLE_ORIENT_STATE"
 
     elif self.State == self.TRAY_ROT_STATE:
       #Target: position: [2.9811196980761374, 0.14065675569870453, -0.01080707872834889, 0.22084068921220645, 2.9282298398488074, 0.0, 0.0]
