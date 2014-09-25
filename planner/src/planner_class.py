@@ -12,7 +12,7 @@ class PlannerClass:
     #print "\n-------------\nInitialized!\n-------------\n"
     
     self.XYTolerance = 0.15
-    self.TargetRadius = 140
+    self.TargetRadius = 180
     self.GripperDelayInt = 5
 
     self.IDLE_STATE = 0
@@ -65,7 +65,7 @@ class PlannerClass:
         return ["SEARCH_STATE"]        
 
     elif self.State == self.REACH_STATE:
-      if (R > 1.1):
+      if (R > self.TargetRadius):
         self.State = self.GRASP_STATE
         print "Entering GRASP_STATE"
         # save candy position for future verification
@@ -92,7 +92,7 @@ class PlannerClass:
       if (jp[2] > -0.06):
         self.State = self.POINT_UP_STATE
         print "Entering POINT_UP_STATE"
-        return ["POINT_UP_STATE"]
+        return ["POINT_UP_STATE",[None, 0.0063234621360717625, -0.01229933523880404, None, None]]
       else:
         print "Arm has not been fully retracted"
         return ["RETRACT_STATE"]        
@@ -106,7 +106,7 @@ class PlannerClass:
         return ["VERIFY_STATE"]
       else:
         print "Arm has not been oriented vertically" 
-        return ["POINT_UP_STATE"]
+        return ["POINT_UP_STATE",[None, 0.0063234621360717625, -0.01229933523880404, None, None]]
 
     elif self.State == self.VERIFY_STATE:
       if ((X > self.SavedX-.1)and(X < self.SavedX+.1)) and ((Y > self.SavedY-.1)and(Y < self.SavedY+.1)):
