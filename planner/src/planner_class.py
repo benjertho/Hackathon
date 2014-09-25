@@ -42,7 +42,7 @@ class PlannerClass:
       if (start == True): 
         # If the joint positions are close enough to zero
         # Ideal
-        #position: [0.007189413957253565, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876, 0.0, 0.0]
+        #position: [2.9339756698578445, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876, 0.0, 0.0]
         # Bound
         #position: [0.19009656316385162, 0.00017117652279175153, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876, 0.0, 0.0]
         if (jp[0] < 0.19) and (jp[1] < 0.01) and (jp[2] > -0.01) and (jp[3] < 0.01) and (jp[4] > 2.90):
@@ -52,7 +52,7 @@ class PlannerClass:
           return ["SEARCH_STATE"]
         else:
           print "Joints are not in initial position"
-          return ["IDLE_STATE",[0.007189413957253565, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
+          return ["IDLE_STATE",[2.9339756698578445, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
           
 
     elif self.State == self.SEARCH_STATE:
@@ -101,21 +101,27 @@ class PlannerClass:
       # position: [0.190187186028859, 0.0063234621360717625, -0.01229933523880404, 0.2141371499584198, 2.9282962115245876, 0.0, 0.0]
       # position: [0.190187186028859, 0.14065675569870453, -0.01229933523880404, 0.22110617591532672, 2.9282962115245876, 0.0, 0.0]
       if (jp[1] < 0.14) and (jp[2] > -0.01):
-        self.State = self.VERIFY_STATE
-        print "Entering VERIFY_STATE"
-        return ["VERIFY_STATE"]
-      else:
-        print "Arm has not been oriented vertically" 
-        return ["POINT_UP_STATE",[None, 0.0063234621360717625, -0.01229933523880404, None, None]]
-
-    elif self.State == self.VERIFY_STATE:
-      if ((X > self.SavedX-.1)and(X < self.SavedX+.1)) and ((Y > self.SavedY-.1)and(Y < self.SavedY+.1)):
         self.State = self.TRAY_ROT_STATE
         print "Entering TRAY_ROT_STATE"
         return ["TRAY_ROT_STATE",[2.9811196980761374,None,None,None,None]]
       else:
-        print "Target cannot be verified - Aborting"
-        return ["IDLE_ORIENT_STATE",[None, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
+        print "Arm has not been oriented vertically" 
+        return ["POINT_UP_STATE",[None, 0.0063234621360717625, -0.01229933523880404, None, None]]
+        
+
+        # self.State = self.VERIFY_STATE
+        # print "Entering VERIFY_STATE"
+        # return ["VERIFY_STATE"]
+
+
+    # elif self.State == self.VERIFY_STATE:
+    #   if ((X > self.SavedX-.1)and(X < self.SavedX+.1)) and ((Y > self.SavedY-.1)and(Y < self.SavedY+.1)):
+    #     self.State = self.TRAY_ROT_STATE
+    #     print "Entering TRAY_ROT_STATE"
+    #     return ["TRAY_ROT_STATE",[2.9811196980761374,None,None,None,None]]
+    #   else:
+    #     print "Target cannot be verified - Aborting"
+    #     return ["IDLE_ORIENT_STATE",[None, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
 
     elif self.State == self.TRAY_ROT_STATE:
       #Target: position: [2.9811196980761374, 0.14065675569870453, -0.01080707872834889, 0.22084068921220645, 2.9282298398488074, 0.0, 0.0]
