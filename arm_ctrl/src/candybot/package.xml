@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package>
+  <name>candybot</name>
+  <version>0.1.0</version>
+  <description>Hackaton candybot project</description>
+
+  <maintainer email="ivan.vishniakou@gmail.com">Ivan Vishniakou</maintainer>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <run_depend>rospy</run_depend>
+</package>
