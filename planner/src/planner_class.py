@@ -45,14 +45,14 @@ class PlannerClass:
         #position: [2.9339756698578445, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876, 0.0, 0.0]
         # Bound
         #position: [0.19009656316385162, 0.00017117652279175153, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876, 0.0, 0.0]
-        if (jp[0] < 0.19) and (jp[1] < 0.01) and (jp[2] > -0.01) and (jp[3] < 0.01) and (jp[4] > 2.90):
+        if (jp[0] > 2.83) and (jp[0] < 3.06) and (jp[1] > 1.1) and (jp[1] < 1.3) and (jp[2] > -0.01) and (jp[3] < 0.01) and (jp[4] > 2.90):
           # we can confidently start the search
           self.State = self.SEARCH_STATE
           print "Entering SEARCH_STATE"
           return ["SEARCH_STATE"]
         else:
           print "Joints are not in initial position"
-          return ["IDLE_STATE",[2.9339756698578445, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
+          return ["IDLE_STATE",[2.9339756698578445, 1.2 , -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
           
 
     elif self.State == self.SEARCH_STATE:
@@ -152,22 +152,22 @@ class PlannerClass:
       time.sleep(self.GripperDelayInt)
       self.State = self.IDLE_ORIENT_STATE
       print "Entering IDLE_ORIENT_STATE"
-      return ["IDLE_ORIENT_STATE",[None, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
+      return ["IDLE_ORIENT_STATE",[None, 1.2 , -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
 
     elif self.State == self.IDLE_ORIENT_STATE:
       if (jp[1] < 0.01) and (jp[2] > -0.01) and (jp[3] < 0.01) and (jp[4] > 2.90):
         self.State = self.IDLE_ROT_STATE
         print "Entering IDLE_ROT_STATE"
-        return ["IDLE_ROT_STATE"]
+        return ["IDLE_ROT_STATE",[2.9339756698578445, 1.2 , -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
       else:
         print "Arm has not been oriented vertically"
-        return ["IDLE_ORIENT_STATE",[None, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
+        return ["IDLE_ORIENT_STATE",[None, 1.2 , -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
       
     elif self.State == self.IDLE_ROT_STATE:
       if (jp[0] < 0.19):
         self.State = self.IDLE_STATE
         print "Entering IDLE_STATE"
-        return ["IDLE_STATE",[0.007189413957253565, 0.00016110731556870733, -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876, 0.0, 0.0]]
+        return ["IDLE_STATE",[2.9339756698578445, 1.2 , -3.1415926535897935e-05, 4.4247783853377367e-05, 2.9282962115245876]]
       else:
         print "Arm has not been rotated to zero"
         return ["IDLE_ROT_STATE"]
